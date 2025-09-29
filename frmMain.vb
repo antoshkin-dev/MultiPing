@@ -314,8 +314,8 @@ Public Class frmMain
         End If
     End Sub
     Private Sub ExpandNode(NodeID As Integer)
-        PrintDebug("Начинаем разворачивать узел")
-        Dim EndPoint As MPEndPoint = EndPointsList.Find(Function(fndobj) fndobj.EPID = NodeID)
+        'PrintDebug("Начинаем разворачивать узел")
+        Dim EndPoint As MPEndPoint = GetNodeByID(NodeID)
         If EndPoint Is Nothing Then Exit Sub
         If EndPoint.Expanded = True Then Exit Sub
         '1. Проверяем, что родительский узел развернут
@@ -330,7 +330,7 @@ Public Class frmMain
         Dim RowForExpand As Extended_Tree.ctlTreeRow = pnlTree.Controls("treeRow" & EndPoint.TreeRowID)
         RowForExpand.Expanded = True
         ShowRows(RowForExpand)
-        PrintDebug("Закончили разворачивать узел")
+        'PrintDebug("Закончили разворачивать узел")
     End Sub
     Private Sub ShowRows(ByRef rowObject As Extended_Tree.ctlTreeRow)
         REM Нужно отобразить всех детей данного узла и сдвинуть вниз все строки с большим айди-строки
@@ -443,7 +443,6 @@ Public Class frmMain
         End If
 
     End Sub
-
     Private Sub AddTreeRow(CurNode As MPEndPoint, RowId As Integer, RowLeft As Integer, RowTop As Integer, HasChild As Boolean)
         Dim DTimer As New DebugTimer
 
@@ -508,8 +507,6 @@ Public Class frmMain
 
         'Debug.Print("row painted at " & DTimer.GetTime & "ms")
     End Sub
-
-
     Private Sub tsbRollUp_Click(sender As Object, e As EventArgs) Handles tsbRollUp.Click
         Dim Roots As List(Of MPEndPoint) = EndPointsList.FindAll(Function(fndobj) fndobj.ParentID = -1)
         pnlTree.SuspendLayout()
@@ -999,6 +996,11 @@ Public Class frmMain
         HighlightRow(pnlTree.Controls("treeRow" & Founded(FoundIndex).TreeRowID))
         'Ставим текст прокрутки результатов
         lblFindResult.Text = "Результат " & FoundIndex + 1 & " из " & Founded.Count
+        'ставим текст в статусе окна
+        lblInfo.Text = "Найдена: " & Founded(FoundIndex).Name
+        'Прокучиваем экан до найденной позиции
+        Dim RowForExpand As Extended_Tree.ctlTreeRow = pnlTree.Controls("treeRow" & Founded(FoundIndex).TreeRowID)
+        pnlTree.ScrollControlIntoView(RowForExpand)
     End Sub
     Private Function GetNodeByID(NodeID As Integer) As MPEndPoint
         Return EndPointsList.Find(Function(fndobj) fndobj.EPID = NodeID)
@@ -1182,8 +1184,6 @@ Public Class frmMain
     Private Sub btnCopyPassword_Click(sender As Object, e As EventArgs) Handles btnCopyPassword.Click
         Clipboard.SetText(tbxRandomPassword.Text)
     End Sub
-
-
     Private Sub tbxUserForConnect_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxUserForConnect.KeyDown
         If (e.KeyValue = Keys.Return) Then
             RunPAMConnection(tbxUserForConnect.Text)
@@ -1214,5 +1214,13 @@ Public Class frmMain
             FoundIndex = Founded.Count - 1
         End If
         GotoFindResult()
+    End Sub
+
+    Private Sub btnCloseFind_Click(sender As Object, e As EventArgs) Handles btnCloseFind.Click
+        pnlFindResult.Visible = False
+    End Sub
+
+    Private Sub pnlTree_Scroll(sender As Object, e As ScrollEventArgs) Handles pnlTree.Scroll
+        Debug.Print(e.NewValue)
     End Sub
 End Class

@@ -37,6 +37,7 @@ Partial Class frmMain
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnCopyPassword = New System.Windows.Forms.Button()
         Me.btnClosePwdPnl = New System.Windows.Forms.Button()
+        Me.btnCloseFind = New System.Windows.Forms.Button()
         Me.tmrPinger = New System.Windows.Forms.Timer(Me.components)
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblInfo = New System.Windows.Forms.ToolStripStatusLabel()
@@ -53,9 +54,9 @@ Partial Class frmMain
         Me.tbxUserForConnect = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlFindResult = New System.Windows.Forms.Panel()
-        Me.lblFindResult = New System.Windows.Forms.Label()
-        Me.btnFindPrev = New System.Windows.Forms.Button()
         Me.btnFindNext = New System.Windows.Forms.Button()
+        Me.btnFindPrev = New System.Windows.Forms.Button()
+        Me.lblFindResult = New System.Windows.Forms.Label()
         Me.ToolStrip1.SuspendLayout()
         Me.cmActions.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -73,9 +74,9 @@ Partial Class frmMain
         Me.pnlTree.AutoScroll = True
         Me.pnlTree.BackColor = System.Drawing.Color.White
         Me.pnlTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlTree.Location = New System.Drawing.Point(4, 26)
+        Me.pnlTree.Location = New System.Drawing.Point(4, 23)
         Me.pnlTree.Name = "pnlTree"
-        Me.pnlTree.Size = New System.Drawing.Size(389, 482)
+        Me.pnlTree.Size = New System.Drawing.Size(389, 486)
         Me.pnlTree.TabIndex = 0
         '
         'ToolStrip1
@@ -167,7 +168,7 @@ Partial Class frmMain
         Me.btnCopyPassword.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnCopyPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCopyPassword.Image = CType(resources.GetObject("btnCopyPassword.Image"), System.Drawing.Image)
-        Me.btnCopyPassword.Location = New System.Drawing.Point(147, 4)
+        Me.btnCopyPassword.Location = New System.Drawing.Point(145, 5)
         Me.btnCopyPassword.Name = "btnCopyPassword"
         Me.btnCopyPassword.Size = New System.Drawing.Size(23, 22)
         Me.btnCopyPassword.TabIndex = 2
@@ -179,12 +180,25 @@ Partial Class frmMain
         Me.btnClosePwdPnl.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnClosePwdPnl.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnClosePwdPnl.Image = CType(resources.GetObject("btnClosePwdPnl.Image"), System.Drawing.Image)
-        Me.btnClosePwdPnl.Location = New System.Drawing.Point(172, 4)
+        Me.btnClosePwdPnl.Location = New System.Drawing.Point(174, 1)
         Me.btnClosePwdPnl.Name = "btnClosePwdPnl"
         Me.btnClosePwdPnl.Size = New System.Drawing.Size(23, 22)
         Me.btnClosePwdPnl.TabIndex = 3
         Me.ToolTip1.SetToolTip(Me.btnClosePwdPnl, "Закрыть")
         Me.btnClosePwdPnl.UseVisualStyleBackColor = True
+        '
+        'btnCloseFind
+        '
+        Me.btnCloseFind.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.btnCloseFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCloseFind.Image = CType(resources.GetObject("btnCloseFind.Image"), System.Drawing.Image)
+        Me.btnCloseFind.Location = New System.Drawing.Point(166, 1)
+        Me.btnCloseFind.Margin = New System.Windows.Forms.Padding(1)
+        Me.btnCloseFind.Name = "btnCloseFind"
+        Me.btnCloseFind.Size = New System.Drawing.Size(23, 22)
+        Me.btnCloseFind.TabIndex = 4
+        Me.ToolTip1.SetToolTip(Me.btnCloseFind, "Закрыть")
+        Me.btnCloseFind.UseVisualStyleBackColor = True
         '
         'tmrPinger
         '
@@ -360,14 +374,37 @@ Partial Class frmMain
         'pnlFindResult
         '
         Me.pnlFindResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlFindResult.Controls.Add(Me.btnCloseFind)
         Me.pnlFindResult.Controls.Add(Me.btnFindNext)
         Me.pnlFindResult.Controls.Add(Me.btnFindPrev)
         Me.pnlFindResult.Controls.Add(Me.lblFindResult)
-        Me.pnlFindResult.Location = New System.Drawing.Point(221, 26)
+        Me.pnlFindResult.Location = New System.Drawing.Point(174, 22)
         Me.pnlFindResult.Name = "pnlFindResult"
-        Me.pnlFindResult.Size = New System.Drawing.Size(166, 34)
+        Me.pnlFindResult.Size = New System.Drawing.Size(192, 34)
         Me.pnlFindResult.TabIndex = 17
         Me.pnlFindResult.Visible = False
+        '
+        'btnFindNext
+        '
+        Me.btnFindNext.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.btnFindNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnFindNext.Location = New System.Drawing.Point(138, 3)
+        Me.btnFindNext.Name = "btnFindNext"
+        Me.btnFindNext.Size = New System.Drawing.Size(25, 26)
+        Me.btnFindNext.TabIndex = 2
+        Me.btnFindNext.Text = ">"
+        Me.btnFindNext.UseVisualStyleBackColor = True
+        '
+        'btnFindPrev
+        '
+        Me.btnFindPrev.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.btnFindPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnFindPrev.Location = New System.Drawing.Point(1, 3)
+        Me.btnFindPrev.Name = "btnFindPrev"
+        Me.btnFindPrev.Size = New System.Drawing.Size(25, 26)
+        Me.btnFindPrev.TabIndex = 1
+        Me.btnFindPrev.Text = "<"
+        Me.btnFindPrev.UseVisualStyleBackColor = True
         '
         'lblFindResult
         '
@@ -377,26 +414,6 @@ Partial Class frmMain
         Me.lblFindResult.TabIndex = 0
         Me.lblFindResult.Text = "Результат 1 из 3"
         Me.lblFindResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'btnFindPrev
-        '
-        Me.btnFindPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFindPrev.Location = New System.Drawing.Point(1, 3)
-        Me.btnFindPrev.Name = "btnFindPrev"
-        Me.btnFindPrev.Size = New System.Drawing.Size(25, 26)
-        Me.btnFindPrev.TabIndex = 1
-        Me.btnFindPrev.Text = "<"
-        Me.btnFindPrev.UseVisualStyleBackColor = True
-        '
-        'btnFindNext
-        '
-        Me.btnFindNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFindNext.Location = New System.Drawing.Point(138, 3)
-        Me.btnFindNext.Name = "btnFindNext"
-        Me.btnFindNext.Size = New System.Drawing.Size(25, 26)
-        Me.btnFindNext.TabIndex = 2
-        Me.btnFindNext.Text = ">"
-        Me.btnFindNext.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -462,4 +479,5 @@ Partial Class frmMain
     Friend WithEvents lblFindResult As Label
     Friend WithEvents btnFindPrev As Button
     Friend WithEvents btnFindNext As Button
+    Friend WithEvents btnCloseFind As Button
 End Class
