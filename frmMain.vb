@@ -23,7 +23,7 @@ Public Class frmMain
     Private CurrentCID As Integer = -1
     Private Delegate Sub UpdateFormElementD(ByRef FormElement As Object, ByRef RunningSub As Func(Of Object, Object), RunningSubArgs As Object)
     Private MenuCommands As New List(Of MenuCommand)
-    Private PamRunCMD As String = ""
+    Private PamRunOptions As PAMConnectionOptions
     Private FindDebugCounter As Integer
     ''' <summary>
     ''' Список объектов найденных через поиск узлов
@@ -88,6 +88,9 @@ Public Class frmMain
         Me.Focus()
     End Sub
     Private Sub cbxConfigs_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxConfigs.SelectedIndexChanged
+        'обнуляем результаты поиска, если они были
+        ResetSearch()
+        '
 
         Dim CID As Integer = CType(cbxConfigs.SelectedItem, ListItem).Value
         Dim XMLText As String = ""
@@ -761,10 +764,13 @@ Public Class frmMain
             If (Mid(RunCMD.Command, 1, Len("mppammodule")) = "mppammodule") Then
                 'Модуль подключения через PAM
                 ' RunPAMConnection(RunCMD.Command)
-                PamRunCMD = RunCMD.Command
-                pnlUserForConnect.Visible = True
-                tbxUserForConnect.Focus()
-                Debug.Print(pnlUserForConnect.Visible.ToString)
+                PreparePAMCommand(RunCMD.Command)
+                If PamRunOptions.ConnectionType = "ssh" Then
+                    pnlUserForConnect.Visible = True
+                    tbxUserForConnect.Focus()
+                Else
+                    RunPAMConnection("")
+                End If
             Else 'Обычное приложение с параметрами запуска
                 Try
                     Call Shell(RunCMD.Command, AppWinStyle.NormalFocus)
@@ -777,18 +783,24 @@ Public Class frmMain
             ShowWebBrowserWin(150, 150, RunCMD.Command)
         End If
     End Sub
-
+    Private Sub PreparePAMCommand(PamRunCMD As String)
+        Dim TX As String = Mid(PamRunCMD, 13)
+        Dim TMass() As String = TX.Split(":")
+        PamRunOptions = New PAMConnectionOptions With {
+            .PAMServer = TMass(1),
+            .ConnectionType = TMass(2),
+            .RemoteHostIP = TMass(3),
+            .RemoteHostName = TMass(0)
+        }
+    End Sub
     Private Sub RunPAMConnection(RunUser As String)
         'mppammodule %HOSTNAME%:%PAMSRV%:%PAMTYPE%:%IPCMD% 
-        Dim TX As String = Mid(PamRunCMD, 13)
-        PamRunCMD = ""
-        Dim TMass() As String = TX.Split(":")
         With PamCls
-            .PamServerURL = TMass(1)
-            .ConnectionType = TMass(2)
-            .ConnectionPoint = TMass(3)
+            .PamServerURL = PamRunOptions.PAMServer
+            .ConnectionType = PamRunOptions.ConnectionType
+            .ConnectionPoint = PamRunOptions.RemoteHostIP
             .ConnectionPointUser = RunUser
-            .EndPointName = TMass(0)
+            .EndPointName = PamRunOptions.RemoteHostName
             .ShowPamWindow()
         End With
     End Sub
@@ -957,10 +969,6 @@ Public Class frmMain
     End Sub
 
     Private Sub tbxSearch_Click(sender As Object, e As EventArgs) Handles tbxSearch.Click
-        If tbxSearch.Text = "Поиск" Then
-            tbxSearch.Text = ""
-            Exit Sub
-        End If
         tbxSearch.SelectionStart = 0
         tbxSearch.SelectionLength = Len(tbxSearch.Text)
     End Sub
@@ -983,10 +991,10 @@ Public Class frmMain
             lblInfo.Text = "Найдено: " & Founded.Count
             FoundIndex = 0
             GotoFindResult()
-            pnlFindResult.Visible = True
+            pnlFindResult.Height = btnFindPrev.Top + btnFindPrev.Height + 4
         Else
             lblInfo.Text = "Искомый узел не найден"
-            pnlFindResult.Visible = False
+            ResetSearch()
         End If
     End Sub
     Private Sub GotoFindResult()
@@ -1217,10 +1225,20 @@ Public Class frmMain
     End Sub
 
     Private Sub btnCloseFind_Click(sender As Object, e As EventArgs) Handles btnCloseFind.Click
-        pnlFindResult.Visible = False
+        ResetSearch()
     End Sub
 
     Private Sub pnlTree_Scroll(sender As Object, e As ScrollEventArgs) Handles pnlTree.Scroll
         Debug.Print(e.NewValue)
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        ResetSearch()
+        pnlFindResult.Visible = True
+    End Sub
+    Private Sub ResetSearch()
+        Founded = Nothing
+        pnlFindResult.Height = tbxSearch.Top * 2 + tbxSearch.Height
+        pnlFindResult.Visible = False
     End Sub
 End Class

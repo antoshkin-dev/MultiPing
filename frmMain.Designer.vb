@@ -31,7 +31,6 @@ Partial Class frmMain
         Me.tsbPasswordInvent = New System.Windows.Forms.ToolStripButton()
         Me.tsbGeneratePassword = New System.Windows.Forms.ToolStripButton()
         Me.cbxConfigs = New System.Windows.Forms.ToolStripComboBox()
-        Me.tbxSearch = New System.Windows.Forms.ToolStripTextBox()
         Me.cmActions = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
@@ -54,9 +53,11 @@ Partial Class frmMain
         Me.tbxUserForConnect = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlFindResult = New System.Windows.Forms.Panel()
+        Me.tbxSearch = New System.Windows.Forms.TextBox()
         Me.btnFindNext = New System.Windows.Forms.Button()
         Me.btnFindPrev = New System.Windows.Forms.Button()
         Me.lblFindResult = New System.Windows.Forms.Label()
+        Me.btnSearch = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.cmActions.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -81,7 +82,7 @@ Partial Class frmMain
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbExpandAll, Me.tsbRollUp, Me.tsbPasswordInvent, Me.tsbGeneratePassword, Me.cbxConfigs, Me.tbxSearch})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbExpandAll, Me.tsbRollUp, Me.tsbPasswordInvent, Me.tsbGeneratePassword, Me.btnSearch, Me.cbxConfigs})
         Me.ToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
@@ -132,15 +133,6 @@ Partial Class frmMain
         Me.cbxConfigs.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.cbxConfigs.Name = "cbxConfigs"
         Me.cbxConfigs.Size = New System.Drawing.Size(150, 21)
-        '
-        'tbxSearch
-        '
-        Me.tbxSearch.Font = New System.Drawing.Font("Segoe UI", 8.0!)
-        Me.tbxSearch.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.tbxSearch.MaxLength = 30
-        Me.tbxSearch.Name = "tbxSearch"
-        Me.tbxSearch.Size = New System.Drawing.Size(120, 22)
-        Me.tbxSearch.Text = "Поиск"
         '
         'cmActions
         '
@@ -368,27 +360,35 @@ Partial Class frmMain
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(344, 37)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Введите пользователя узла"
+        Me.Label1.Text = "Введите SSH пользователя узла:"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlFindResult
         '
         Me.pnlFindResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlFindResult.Controls.Add(Me.tbxSearch)
         Me.pnlFindResult.Controls.Add(Me.btnCloseFind)
         Me.pnlFindResult.Controls.Add(Me.btnFindNext)
         Me.pnlFindResult.Controls.Add(Me.btnFindPrev)
         Me.pnlFindResult.Controls.Add(Me.lblFindResult)
-        Me.pnlFindResult.Location = New System.Drawing.Point(174, 22)
+        Me.pnlFindResult.Location = New System.Drawing.Point(95, 22)
         Me.pnlFindResult.Name = "pnlFindResult"
-        Me.pnlFindResult.Size = New System.Drawing.Size(192, 34)
+        Me.pnlFindResult.Size = New System.Drawing.Size(192, 62)
         Me.pnlFindResult.TabIndex = 17
         Me.pnlFindResult.Visible = False
+        '
+        'tbxSearch
+        '
+        Me.tbxSearch.Location = New System.Drawing.Point(3, 4)
+        Me.tbxSearch.Name = "tbxSearch"
+        Me.tbxSearch.Size = New System.Drawing.Size(159, 20)
+        Me.tbxSearch.TabIndex = 5
         '
         'btnFindNext
         '
         Me.btnFindNext.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnFindNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFindNext.Location = New System.Drawing.Point(138, 3)
+        Me.btnFindNext.Location = New System.Drawing.Point(163, 30)
         Me.btnFindNext.Name = "btnFindNext"
         Me.btnFindNext.Size = New System.Drawing.Size(25, 26)
         Me.btnFindNext.TabIndex = 2
@@ -399,7 +399,7 @@ Partial Class frmMain
         '
         Me.btnFindPrev.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnFindPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnFindPrev.Location = New System.Drawing.Point(1, 3)
+        Me.btnFindPrev.Location = New System.Drawing.Point(1, 30)
         Me.btnFindPrev.Name = "btnFindPrev"
         Me.btnFindPrev.Size = New System.Drawing.Size(25, 26)
         Me.btnFindPrev.TabIndex = 1
@@ -408,12 +408,21 @@ Partial Class frmMain
         '
         'lblFindResult
         '
-        Me.lblFindResult.Location = New System.Drawing.Point(28, 6)
+        Me.lblFindResult.Location = New System.Drawing.Point(28, 33)
         Me.lblFindResult.Name = "lblFindResult"
-        Me.lblFindResult.Size = New System.Drawing.Size(110, 18)
+        Me.lblFindResult.Size = New System.Drawing.Size(134, 18)
         Me.lblFindResult.TabIndex = 0
         Me.lblFindResult.Text = "Результат 1 из 3"
         Me.lblFindResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'btnSearch
+        '
+        Me.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnSearch.Image = CType(resources.GetObject("btnSearch.Image"), System.Drawing.Image)
+        Me.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(23, 20)
+        Me.btnSearch.Text = "ToolStripButton1"
         '
         'frmMain
         '
@@ -443,6 +452,7 @@ Partial Class frmMain
         Me.pnlUserForConnect.ResumeLayout(False)
         Me.pnlUserForConnect.PerformLayout()
         Me.pnlFindResult.ResumeLayout(False)
+        Me.pnlFindResult.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -456,7 +466,6 @@ Partial Class frmMain
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents tmrPinger As System.Windows.Forms.Timer
     Friend WithEvents TestToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents tbxSearch As ToolStripTextBox
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents lblStatus As ToolStripStatusLabel
     Friend WithEvents tsbPasswordInvent As ToolStripButton
@@ -480,4 +489,6 @@ Partial Class frmMain
     Friend WithEvents btnFindPrev As Button
     Friend WithEvents btnFindNext As Button
     Friend WithEvents btnCloseFind As Button
+    Friend WithEvents tbxSearch As TextBox
+    Friend WithEvents btnSearch As ToolStripButton
 End Class
