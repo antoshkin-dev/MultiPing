@@ -6,33 +6,6 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 
 Public Class MyClasses
-    Public Class PAMConnectionOptions
-        '%HOSTNAME%:%PAMSRV%:%PAMTYPE%:%IPCMD% 
-        ''' <summary>
-        ''' Адрес PAM-сервера
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property PAMServer As String
-
-        ''' <summary>
-        ''' Имя удаленного хоста (нужно для отображения в заголовке RDP)
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property RemoteHostName As String
-
-        ''' <summary>
-        ''' IP-адрес хоста, к которому будет осуществляться соединение через PAM
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property RemoteHostIP As String
-
-        ''' <summary>
-        ''' Тип соединения - RDP,SSH...
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ConnectionType As String
-
-    End Class
     Public Class ListItem
         Private _Text As String
         Private _Value As String

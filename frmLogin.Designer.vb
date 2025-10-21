@@ -103,6 +103,7 @@ Partial Class frmLogin
         Me.tbxPassword.Size = New System.Drawing.Size(137, 20)
         Me.tbxPassword.TabIndex = 3
         Me.tbxPassword.UseSystemPasswordChar = True
+        Me.tbxPassword.WordWrap = False
         '
         'btnLogin
         '
@@ -173,6 +174,7 @@ Partial Class frmLogin
         Me.tbxSessionPin.TabIndex = 4
         Me.tbxSessionPin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxSessionPin.UseSystemPasswordChar = True
+        Me.tbxSessionPin.WordWrap = False
         '
         'frmLogin
         '

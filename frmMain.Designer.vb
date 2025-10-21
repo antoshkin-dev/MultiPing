@@ -30,6 +30,7 @@ Partial Class frmMain
         Me.tsbRollUp = New System.Windows.Forms.ToolStripButton()
         Me.tsbPasswordInvent = New System.Windows.Forms.ToolStripButton()
         Me.tsbGeneratePassword = New System.Windows.Forms.ToolStripButton()
+        Me.btnSearch = New System.Windows.Forms.ToolStripButton()
         Me.cbxConfigs = New System.Windows.Forms.ToolStripComboBox()
         Me.cmActions = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -49,6 +50,15 @@ Partial Class frmMain
         Me.tbxPinCode = New System.Windows.Forms.TextBox()
         Me.lblEnterPin = New System.Windows.Forms.Label()
         Me.pnlUserForConnect = New System.Windows.Forms.Panel()
+        Me.tbxPinForConnect = New System.Windows.Forms.TextBox()
+        Me.lstNodeAccounts = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.tbxPasswordForConnect = New System.Windows.Forms.TextBox()
+        Me.btnPamConnect = New System.Windows.Forms.Button()
         Me.btnHideUserForConnect = New System.Windows.Forms.Button()
         Me.tbxUserForConnect = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -57,7 +67,6 @@ Partial Class frmMain
         Me.btnFindNext = New System.Windows.Forms.Button()
         Me.btnFindPrev = New System.Windows.Forms.Button()
         Me.lblFindResult = New System.Windows.Forms.Label()
-        Me.btnSearch = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.cmActions.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -125,6 +134,15 @@ Partial Class frmMain
         Me.tsbGeneratePassword.Name = "tsbGeneratePassword"
         Me.tsbGeneratePassword.Size = New System.Drawing.Size(23, 20)
         Me.tsbGeneratePassword.Text = "Сгенерить пароль"
+        '
+        'btnSearch
+        '
+        Me.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnSearch.Image = CType(resources.GetObject("btnSearch.Image"), System.Drawing.Image)
+        Me.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(23, 20)
+        Me.btnSearch.Text = "ToolStripButton1"
         '
         'cbxConfigs
         '
@@ -314,24 +332,160 @@ Partial Class frmMain
         Me.pnlUserForConnect.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlUserForConnect.BackColor = System.Drawing.Color.FromArgb(CType(CType(105, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(146, Byte), Integer))
+        Me.pnlUserForConnect.Controls.Add(Me.tbxPinForConnect)
+        Me.pnlUserForConnect.Controls.Add(Me.lstNodeAccounts)
+        Me.pnlUserForConnect.Controls.Add(Me.Label5)
+        Me.pnlUserForConnect.Controls.Add(Me.Label6)
+        Me.pnlUserForConnect.Controls.Add(Me.Label4)
+        Me.pnlUserForConnect.Controls.Add(Me.Label3)
+        Me.pnlUserForConnect.Controls.Add(Me.Label2)
+        Me.pnlUserForConnect.Controls.Add(Me.tbxPasswordForConnect)
+        Me.pnlUserForConnect.Controls.Add(Me.btnPamConnect)
         Me.pnlUserForConnect.Controls.Add(Me.btnHideUserForConnect)
         Me.pnlUserForConnect.Controls.Add(Me.tbxUserForConnect)
         Me.pnlUserForConnect.Controls.Add(Me.Label1)
-        Me.pnlUserForConnect.Location = New System.Drawing.Point(31, 211)
+        Me.pnlUserForConnect.Location = New System.Drawing.Point(31, 100)
         Me.pnlUserForConnect.Name = "pnlUserForConnect"
-        Me.pnlUserForConnect.Size = New System.Drawing.Size(345, 108)
+        Me.pnlUserForConnect.Size = New System.Drawing.Size(345, 320)
         Me.pnlUserForConnect.TabIndex = 16
         Me.pnlUserForConnect.Visible = False
         '
+        'tbxPinForConnect
+        '
+        Me.tbxPinForConnect.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbxPinForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.tbxPinForConnect.Font = New System.Drawing.Font("Tahoma", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.tbxPinForConnect.Location = New System.Drawing.Point(96, 246)
+        Me.tbxPinForConnect.MaxLength = 8
+        Me.tbxPinForConnect.Name = "tbxPinForConnect"
+        Me.tbxPinForConnect.PasswordChar = Global.Microsoft.VisualBasic.ChrW(8226)
+        Me.tbxPinForConnect.Size = New System.Drawing.Size(149, 25)
+        Me.tbxPinForConnect.TabIndex = 4
+        Me.tbxPinForConnect.Text = "12345678"
+        Me.tbxPinForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.tbxPinForConnect.UseSystemPasswordChar = True
+        Me.tbxPinForConnect.WordWrap = False
+        '
+        'lstNodeAccounts
+        '
+        Me.lstNodeAccounts.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lstNodeAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.lstNodeAccounts.Font = New System.Drawing.Font("Consolas", 12.0!)
+        Me.lstNodeAccounts.FormattingEnabled = True
+        Me.lstNodeAccounts.Location = New System.Drawing.Point(14, 193)
+        Me.lstNodeAccounts.Name = "lstNodeAccounts"
+        Me.lstNodeAccounts.Size = New System.Drawing.Size(321, 27)
+        Me.lstNodeAccounts.TabIndex = 3
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.Label5.Location = New System.Drawing.Point(11, 42)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(283, 18)
+        Me.Label5.TabIndex = 3
+        Me.Label5.Text = "Укажите учётные данные удалённого узла"
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.Label6.Location = New System.Drawing.Point(11, 222)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(251, 18)
+        Me.Label6.TabIndex = 3
+        Me.Label6.Text = "... и введите пин-код текущей сессии:"
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.Label4.Location = New System.Drawing.Point(11, 169)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(278, 18)
+        Me.Label4.TabIndex = 3
+        Me.Label4.Text = "или выберите учетную запись из списка ..."
+        '
+        'Label3
+        '
+        Me.Label3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.Label3.Location = New System.Drawing.Point(11, 115)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(59, 18)
+        Me.Label3.TabIndex = 3
+        Me.Label3.Text = "Пароль:"
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.Label2.Location = New System.Drawing.Point(11, 68)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(131, 18)
+        Me.Label2.TabIndex = 3
+        Me.Label2.Text = "Имя пользователя:"
+        '
+        'tbxPasswordForConnect
+        '
+        Me.tbxPasswordForConnect.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbxPasswordForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.tbxPasswordForConnect.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.tbxPasswordForConnect.Location = New System.Drawing.Point(14, 137)
+        Me.tbxPasswordForConnect.MaxLength = 0
+        Me.tbxPasswordForConnect.Name = "tbxPasswordForConnect"
+        Me.tbxPasswordForConnect.Size = New System.Drawing.Size(321, 19)
+        Me.tbxPasswordForConnect.TabIndex = 2
+        Me.tbxPasswordForConnect.Text = "123456"
+        Me.tbxPasswordForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.tbxPasswordForConnect.UseSystemPasswordChar = True
+        Me.tbxPasswordForConnect.WordWrap = False
+        '
+        'btnPamConnect
+        '
+        Me.btnPamConnect.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.btnPamConnect.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.btnPamConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPamConnect.Location = New System.Drawing.Point(78, 287)
+        Me.btnPamConnect.Name = "btnPamConnect"
+        Me.btnPamConnect.Size = New System.Drawing.Size(88, 28)
+        Me.btnPamConnect.TabIndex = 5
+        Me.btnPamConnect.Text = "Подключить"
+        Me.btnPamConnect.UseVisualStyleBackColor = False
+        '
         'btnHideUserForConnect
         '
-        Me.btnHideUserForConnect.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.btnHideUserForConnect.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.btnHideUserForConnect.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnHideUserForConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnHideUserForConnect.Location = New System.Drawing.Point(142, 67)
+        Me.btnHideUserForConnect.Location = New System.Drawing.Point(172, 287)
         Me.btnHideUserForConnect.Name = "btnHideUserForConnect"
-        Me.btnHideUserForConnect.Size = New System.Drawing.Size(61, 28)
-        Me.btnHideUserForConnect.TabIndex = 2
+        Me.btnHideUserForConnect.Size = New System.Drawing.Size(88, 28)
+        Me.btnHideUserForConnect.TabIndex = 6
         Me.btnHideUserForConnect.Text = "Отмена"
         Me.btnHideUserForConnect.UseVisualStyleBackColor = False
         '
@@ -341,10 +495,10 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbxUserForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbxUserForConnect.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.tbxUserForConnect.Location = New System.Drawing.Point(20, 42)
+        Me.tbxUserForConnect.Location = New System.Drawing.Point(14, 90)
         Me.tbxUserForConnect.MaxLength = 0
         Me.tbxUserForConnect.Name = "tbxUserForConnect"
-        Me.tbxUserForConnect.Size = New System.Drawing.Size(300, 19)
+        Me.tbxUserForConnect.Size = New System.Drawing.Size(321, 19)
         Me.tbxUserForConnect.TabIndex = 1
         Me.tbxUserForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxUserForConnect.WordWrap = False
@@ -358,9 +512,9 @@ Partial Class frmMain
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(0, 5)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(344, 37)
+        Me.Label1.Size = New System.Drawing.Size(344, 27)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Введите SSH пользователя узла:"
+        Me.Label1.Text = "Ввод учётных данных"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlFindResult
@@ -414,15 +568,6 @@ Partial Class frmMain
         Me.lblFindResult.TabIndex = 0
         Me.lblFindResult.Text = "Результат 1 из 3"
         Me.lblFindResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'btnSearch
-        '
-        Me.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnSearch.Image = CType(resources.GetObject("btnSearch.Image"), System.Drawing.Image)
-        Me.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnSearch.Name = "btnSearch"
-        Me.btnSearch.Size = New System.Drawing.Size(23, 20)
-        Me.btnSearch.Text = "ToolStripButton1"
         '
         'frmMain
         '
@@ -491,4 +636,13 @@ Partial Class frmMain
     Friend WithEvents btnCloseFind As Button
     Friend WithEvents tbxSearch As TextBox
     Friend WithEvents btnSearch As ToolStripButton
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents tbxPasswordForConnect As TextBox
+    Friend WithEvents lstNodeAccounts As ComboBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents tbxPinForConnect As TextBox
+    Friend WithEvents btnPamConnect As Button
 End Class

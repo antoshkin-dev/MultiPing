@@ -1,14 +1,15 @@
-﻿Imports MultiPing.MyClasses
+﻿Imports System.Diagnostics.SymbolStore
+Imports System.Linq
 Imports System.Net
-Imports System.Xml
-Imports System.Threading
 'Imports System.ComponentModel
 'Imports System.Security.Cryptography
 Imports System.Text.RegularExpressions
-Imports System.Web.Script.Serialization
+Imports System.Threading
 Imports System.Web
-Imports System.Linq
-Imports System.Diagnostics.SymbolStore
+Imports System.Web.Script.Serialization
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
+Imports System.Xml
+Imports MultiPing.MyClasses
 Public Class frmMain
     Private PasswordInventWin As frmPasswordList
     Private ActionsList As New List(Of MPAction)
@@ -23,7 +24,7 @@ Public Class frmMain
     Private CurrentCID As Integer = -1
     Private Delegate Sub UpdateFormElementD(ByRef FormElement As Object, ByRef RunningSub As Func(Of Object, Object), RunningSubArgs As Object)
     Private MenuCommands As New List(Of MenuCommand)
-    Private PamRunOptions As PAMConnectionOptions
+
     Private FindDebugCounter As Integer
     ''' <summary>
     ''' Список объектов найденных через поиск узлов
@@ -760,48 +761,77 @@ Public Class frmMain
         RunCMD = MenuCommands.Find(Function(fndobj) fndobj.ID = ActId)
         'MsgBox(RunCMD.Command)
         'Exit Sub
-        If RunCMD.IsHTTPCommand = 0 Then
-            If (Mid(RunCMD.Command, 1, Len("mppammodule")) = "mppammodule") Then
-                'Модуль подключения через PAM
-                ' RunPAMConnection(RunCMD.Command)
-                PreparePAMCommand(RunCMD.Command)
-                If PamRunOptions.ConnectionType = "ssh" Then
-                    pnlUserForConnect.Visible = True
-                    tbxUserForConnect.Focus()
-                Else
-                    RunPAMConnection("")
-                End If
-            Else 'Обычное приложение с параметрами запуска
-                Try
-                    Call Shell(RunCMD.Command, AppWinStyle.NormalFocus)
-                Catch ex As Exception
-                    MsgBox("Ошибка запуска комманды " & RunCMD.Command & ". " & ex.Message)
-                End Try
-            End If
-
-        Else
+        If RunCMD.IsHTTPCommand = 1 Then
             ShowWebBrowserWin(150, 150, RunCMD.Command)
+            Exit Sub
         End If
+
+        If (Mid(RunCMD.Command, 1, Len("mppammodule")) = "mppammodule") Then 'Модуль подключения через PAM
+            'Сбрасываем учётную запись предыдущего подключения
+            PamCls.ResetConnectionPointPassword()
+            '
+            PreparePAMCommand(RunCMD.Command)
+            If PamCls.ConnectionType = "ssh" Or PamCls.ConnectionType = "sftp" Then
+                ShowPanelUserForConnect()
+            ElseIf PamCls.ConnectionType = "rdp" Then
+                PamCls.ShowPamWindow()
+            Else
+                MsgBox("Отсутствует обработчик указанного типа соединения не задано: " & PamCls.ConnectionType)
+            End If
+        Else 'Обычное приложение с параметрами запуска
+            Try
+                Call Shell(RunCMD.Command, AppWinStyle.NormalFocus)
+            Catch ex As Exception
+                MsgBox("Ошибка запуска команды " & RunCMD.Command & ". " & ex.Message)
+            End Try
+        End If
+
+
+    End Sub
+    ''' <summary>
+    ''' Отображение окошка ввода учётной записи для подключения
+    ''' </summary>
+    Private Sub ShowPanelUserForConnect()
+        'Сбрасываем результаты прошлого взаимодействия с этим окном
+        tbxPasswordForConnect.Text = ""
+        tbxUserForConnect.Text = ""
+        tbxPinForConnect.Text = ""
+        lstNodeAccounts.Items.Clear()
+        lstNodeAccounts.SelectedItem = Nothing
+        lstNodeAccounts.Text = ""
+        Dim CurNode As MPEndPoint = GetNodeByID(SelectedEPID)
+        If CurNode.HasPasswords Then 'У выбранного узла есть учётные записи, доступные нам - включаем список и пинкод
+            'Формируем наполнение списка учётных записей
+            For Each NodeAccount As MPPassword In CurNode.Passwords
+                Dim Caption As String = NodeAccount.PasswordName & IIf(NodeAccount.Description <> "", ": " & NodeAccount.Description, "")
+                lstNodeAccounts.Items.Add(New ListItem(Caption, NodeAccount.PWID))
+            Next
+            '
+            lstNodeAccounts.Enabled = True
+            tbxPinForConnect.Enabled = True
+            lstNodeAccounts.Focus()
+        Else
+            lstNodeAccounts.Enabled = False
+            tbxPinForConnect.Enabled = False
+            tbxUserForConnect.Focus()
+        End If
+        pnlUserForConnect.Visible = True
+
     End Sub
     Private Sub PreparePAMCommand(PamRunCMD As String)
         Dim TX As String = Mid(PamRunCMD, 13)
         Dim TMass() As String = TX.Split(":")
-        PamRunOptions = New PAMConnectionOptions With {
-            .PAMServer = TMass(1),
-            .ConnectionType = TMass(2),
-            .RemoteHostIP = TMass(3),
-            .RemoteHostName = TMass(0)
-        }
-    End Sub
-    Private Sub RunPAMConnection(RunUser As String)
-        'mppammodule %HOSTNAME%:%PAMSRV%:%PAMTYPE%:%IPCMD% 
+        'PamRunOptions = New PAMConnectionOptions With {
+        '    .PAMServer = TMass(1),
+        '    .ConnectionType = TMass(2),
+        '    .RemoteHostIP = TMass(3),
+        '    .RemoteHostName = TMass(0)
+        '}
         With PamCls
-            .PamServerURL = PamRunOptions.PAMServer
-            .ConnectionType = PamRunOptions.ConnectionType
-            .ConnectionPoint = PamRunOptions.RemoteHostIP
-            .ConnectionPointUser = RunUser
-            .EndPointName = PamRunOptions.RemoteHostName
-            .ShowPamWindow()
+            .PamServerURL = TMass(1)
+            .ConnectionType = TMass(2)
+            .ConnectionPoint = TMass(3)
+            .EndPointName = TMass(0)
         End With
     End Sub
     Private Sub TreeRowClick(ByRef CurrentRow As Extended_Tree.ctlTreeRow)
@@ -1171,8 +1201,8 @@ Public Class frmMain
             pnlPIN.Visible = False
 
             e.SuppressKeyPress = True
-        ElseIf (e.KeyValue <> 8 And e.KeyValue <> 37 And e.KeyValue <> 39) And (e.KeyValue < 48 Or e.KeyValue > 57) And (e.KeyValue < 96 Or e.KeyValue > 105) Then
-            'Нажали не разрешенную клавишу, отменяем ввод
+        ElseIf PublicData.CheckIsNumericKeyPress(e.KeyValue) = False Then
+            'Нажали неразрешенную клавишу, отменяем ввод
             e.SuppressKeyPress = True
         End If
     End Sub
@@ -1192,15 +1222,6 @@ Public Class frmMain
     Private Sub btnCopyPassword_Click(sender As Object, e As EventArgs) Handles btnCopyPassword.Click
         Clipboard.SetText(tbxRandomPassword.Text)
     End Sub
-    Private Sub tbxUserForConnect_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxUserForConnect.KeyDown
-        If (e.KeyValue = Keys.Return) Then
-            RunPAMConnection(tbxUserForConnect.Text)
-            tbxUserForConnect.Text = ""
-            pnlUserForConnect.Visible = False
-            e.SuppressKeyPress = True
-        End If
-    End Sub
-
     Private Sub btnHideUserForConnect_Click(sender As Object, e As EventArgs) Handles btnHideUserForConnect.Click
         pnlUserForConnect.Visible = False
         tbxUserForConnect.Text = ""
@@ -1241,4 +1262,76 @@ Public Class frmMain
         pnlFindResult.Height = tbxSearch.Top * 2 + tbxSearch.Height
         pnlFindResult.Visible = False
     End Sub
+
+    Private Sub btnPamConnect_Click(sender As Object, e As EventArgs) Handles btnPamConnect.Click
+        SetPamConPointUserAndConnect()
+    End Sub
+    Private Sub SetPamConPointUserAndConnect()
+        If tbxUserForConnect.Text <> "" Then 'Подключение через имя пользователя и пароль
+            PamCls.ConnectionPointUser = tbxUserForConnect.Text
+            If (tbxPasswordForConnect.Text <> "") Then 'Указан какой-то пароль, задаем его в подключении
+                PamCls.ConnectionPointPassword = tbxPasswordForConnect.Text
+            End If
+            PamCls.ShowPamWindow()
+            ClearAfterPamConnection()
+        ElseIf lstNodeAccounts.SelectedIndex <> -1 Then 'Подключение через сохраненную учетную запись
+            If tbxPinForConnect.Text = "" Then
+                MsgBox("Необходимо указать PIN-код сессии")
+                ClearAfterPamConnection()
+                Exit Sub
+            End If
+            'Запрашиваем пароль от учетной записи с сервера
+            Dim SelItem As ListItem = CType(lstNodeAccounts.SelectedItem, ListItem)
+            Dim Password As PasswordData = RequestPassword(SelItem.Value)
+            If (IsNothing(Password)) Then
+                MsgBox("Неудалось получить пароль выбранной учётной записи")
+                ClearAfterPamConnection()
+                Exit Sub
+            End If
+            'Пытаемся расшифровать шифрованный пароль пинкодом
+            Dim DecryptedPassword As String = ""
+            If PublicData.DecryptPassword(Password.CryptedPassword, tbxPinForConnect.Text, DecryptedPassword) Then
+                PamCls.ConnectionPointUser = Password.UserName
+                PamCls.ConnectionPointPassword = DecryptedPassword
+                DecryptedPassword = Nothing
+                ClearAfterPamConnection()
+                PamCls.ShowPamWindow()
+            Else
+                MsgBox("Пин-код сессии указан неверно")
+            End If
+        Else
+            MsgBox("Недостаточно данных для подключения")
+        End If
+    End Sub
+    Private Sub ClearAfterPamConnection()
+        tbxPasswordForConnect.Text = ""
+        tbxUserForConnect.Text = ""
+        pnlUserForConnect.Visible = False
+        tbxPinForConnect.Text = ""
+        lstNodeAccounts.Items.Clear()
+        GC.Collect()
+    End Sub
+    Private Sub tbxPinForConnect_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxPinForConnect.KeyDown
+        If PublicData.CheckIsNumericKeyPress(e.KeyValue) = False Then
+            'Нажали неразрешенную клавишу, отменяем ввод
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub OnlyNumbersTbx_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxPinForConnect.KeyDown
+        If e.KeyValue = Keys.Return Then
+            SetPamConPointUserAndConnect()
+            e.SuppressKeyPress = True
+        ElseIf PublicData.CheckIsNumericKeyPress(e.KeyValue) = False Then
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub tbxPasswordForConnect_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxPasswordForConnect.KeyDown
+        If e.KeyValue = Keys.Return Then
+            SetPamConPointUserAndConnect()
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
 End Class

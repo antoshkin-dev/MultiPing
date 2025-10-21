@@ -22,6 +22,7 @@ Partial Class frmPassword
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmPassword))
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -34,7 +35,7 @@ Partial Class frmPassword
         Me.tbxPassword = New System.Windows.Forms.TextBox()
         Me.btnShowPassword = New System.Windows.Forms.Button()
         Me.btnCopyPassword = New System.Windows.Forms.Button()
-        Me.tmrClipClear = New System.Windows.Forms.Timer()
+        Me.tmrClipClear = New System.Windows.Forms.Timer(Me.components)
         Me.lblReminder = New System.Windows.Forms.Label()
         Me.pnlPIN = New System.Windows.Forms.Panel()
         Me.tbxPinCode = New System.Windows.Forms.TextBox()
@@ -191,10 +192,11 @@ Partial Class frmPassword
         Me.tbxPinCode.Location = New System.Drawing.Point(20, 47)
         Me.tbxPinCode.MaxLength = 8
         Me.tbxPinCode.Name = "tbxPinCode"
-        Me.tbxPinCode.PasswordChar = Global.Microsoft.VisualBasic.ChrW(8226)
+        Me.tbxPinCode.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.tbxPinCode.Size = New System.Drawing.Size(299, 39)
         Me.tbxPinCode.TabIndex = 1
         Me.tbxPinCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.tbxPinCode.UseSystemPasswordChar = True
         '
         'lblEnterPin
         '
@@ -205,7 +207,7 @@ Partial Class frmPassword
         Me.lblEnterPin.Name = "lblEnterPin"
         Me.lblEnterPin.Size = New System.Drawing.Size(344, 37)
         Me.lblEnterPin.TabIndex = 0
-        Me.lblEnterPin.Text = "Введите PIN-сессии:"
+        Me.lblEnterPin.Text = "Введите PIN сессии:"
         Me.lblEnterPin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'frmPassword

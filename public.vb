@@ -97,7 +97,7 @@ Module PublicData
     End Sub
 
 
-    Function GeneratePassword(length As Integer) As String
+    Public Function GeneratePassword(length As Integer) As String
         Dim Password As New StringBuilder()
         Dim Random As New Random()
         Dim CharLevels(3) As String
@@ -125,5 +125,21 @@ Module PublicData
             Password.Append(Characters(Index))
         Next
         Return Password.ToString()
+    End Function
+
+    ''' <summary>
+    ''' Функция проверяет введена ли с клавиатуры цифра.
+    ''' Разрешены клавишы стрелок, бакспейса и делита
+    ''' Возвращает True, если была нажата цифровая клавиша;
+    ''' False если нажата любая другая клавиша
+    ''' </summary>
+    ''' <param name="KeyCode">Код нажатой клавиши</param>
+    ''' <returns>Boolean</returns>
+    Public Function CheckIsNumericKeyPress(KeyCode As Integer) As Boolean
+        If (KeyCode <> 8 And KeyCode <> 37 And KeyCode <> 39) And (KeyCode < 48 Or KeyCode > 57) And (KeyCode < 96 Or KeyCode > 105) Then
+            Return False
+        Else
+            Return True
+        End If
     End Function
 End Module
