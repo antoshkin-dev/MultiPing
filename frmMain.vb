@@ -469,30 +469,20 @@ Public Class frmMain
 
             CurType = TypeList.Find(Function(fndobj) fndobj.TID = CurNode.Type)
 
-
             .LanVisible = IIf(CurNode.LanIP <> "", True, False)
             .WanVisible = IIf(CurNode.WanIP <> "", True, False)
 
-            'If CurType.Interfaces = 0 Then
-            '    .LanVisible = False
-            '    .WanVisible = False
-            'ElseIf CurType.Interfaces = 1 Then
-            '    .LanVisible = True
-            '    .WanVisible = False
-            'ElseIf CurType.Interfaces = 2 Then
-            '    .LanVisible = False
-            '    .WanVisible = True
-            'ElseIf CurType.Interfaces = 3 Then
-            '    .LanVisible = True
-            '    .WanVisible = True
-            'End If
+            If CurNode.LanIP <> "" Then
+                .IpText = CurNode.LanIP
+            ElseIf CurNode.WanIP <> "" Then
+                .IpText = CurNode.WanIP
+            End If
 
             Try
                 .TypePicture = Image.FromFile(PublicData.ImagePath & CurType.Image)
             Catch
                 Debug.Print("no image " & PublicData.ImagePath & CurType.Image)
             End Try
-
 
             'Если есть дочки, то отображаем плюсик
             .HasChildren = HasChild
@@ -962,15 +952,16 @@ Public Class frmMain
             Dim TreeRow As Extended_Tree.ctlTreeRow = pnlTree.Controls("treeRow" & PingedEP.TreeRowID)
             'Debug.Print("try change state " & PingedEP.TreeRowID & " " & Addr)
             'ChangeState(PingedEP.TreeRowID, IsLanIP, IsWanIP, PingStatus)
+            Try 'Во время закрытия формы может прийти ответ на пинг и выпадет ошибка, так как элементы уже выгружены
+                If IsLanIP = True Then
+                    TreeRow.LanState = PingStatus
+                End If
 
-            If IsLanIP = True Then
-                TreeRow.LanState = PingStatus
-            End If
-
-            If IsWanIP = True Then
-                TreeRow.WanState = PingStatus
-            End If
-
+                If IsWanIP = True Then
+                    TreeRow.WanState = PingStatus
+                End If
+            Catch
+            End Try
             'Debug.Print(TreeRow.Caption & " rid: " & PingedEP.TreeRowID)
         Next
         'Очищаем мусор от класса пинга
