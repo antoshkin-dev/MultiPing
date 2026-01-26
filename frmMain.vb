@@ -759,6 +759,8 @@ Public Class frmMain
         If (Mid(RunCMD.Command, 1, Len("mppammodule")) = "mppammodule") Then 'Модуль подключения через PAM
             'Сбрасываем учётную запись предыдущего подключения
             PamCls.ResetConnectionPointPassword()
+            PamCls.SSHClientPath = My.Settings.PAMSSLClientPath
+            PamCls.SFTPClientPath = My.Settings.PAMSFTPClientPath
             '
             PreparePAMCommand(RunCMD.Command)
             If PamCls.ConnectionType = "ssh" Or PamCls.ConnectionType = "sftp" Then
@@ -770,6 +772,7 @@ Public Class frmMain
             End If
         Else 'Обычное приложение с параметрами запуска
             Try
+                Debug.Print(RunCMD.Command)
                 Call Shell(RunCMD.Command, AppWinStyle.NormalFocus)
             Catch ex As Exception
                 MsgBox("Ошибка запуска команды " & RunCMD.Command & ". " & ex.Message)

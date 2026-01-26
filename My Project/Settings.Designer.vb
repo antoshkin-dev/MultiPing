@@ -116,18 +116,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
-        Public Property WindowWidth() As Integer
-            Get
-                Return CType(Me("WindowWidth"),Integer)
-            End Get
-            Set
-                Me("WindowWidth") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property AutoLogin() As Boolean
             Get
@@ -216,6 +204,37 @@ Namespace My
             Set
                 Me("DecoderURL") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("415")>  _
+        Public Property WindowWidth() As Integer
+            Get
+                Return CType(Me("WindowWidth"),Integer)
+            End Get
+            Set
+                Me("WindowWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("putty.exe JMS-#ID#@#PAMSERVER# 2222 -ssh -pw #PASSWORD#")>  _
+        Public ReadOnly Property PAMSSLClientPath() As String
+            Get
+                Return CType(Me("PAMSSLClientPath"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files (x86)\WinSCP\winscp.exe sftp://JMS-#ID#:#PASSWORD#@#PAMSERVER#:2"& _ 
+            "222 /sessionname=#ENDPOINTNAME# ")>  _
+        Public ReadOnly Property PAMSFTPClientPath() As String
+            Get
+                Return CType(Me("PAMSFTPClientPath"),String)
+            End Get
         End Property
     End Class
 End Namespace
