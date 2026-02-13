@@ -346,7 +346,7 @@ Partial Class frmMain
         Me.pnlUserForConnect.Controls.Add(Me.Label1)
         Me.pnlUserForConnect.Location = New System.Drawing.Point(31, 100)
         Me.pnlUserForConnect.Name = "pnlUserForConnect"
-        Me.pnlUserForConnect.Size = New System.Drawing.Size(345, 320)
+        Me.pnlUserForConnect.Size = New System.Drawing.Size(345, 290)
         Me.pnlUserForConnect.TabIndex = 16
         Me.pnlUserForConnect.Visible = False
         '
@@ -356,7 +356,7 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbxPinForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbxPinForConnect.Font = New System.Drawing.Font("Tahoma", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.tbxPinForConnect.Location = New System.Drawing.Point(96, 246)
+        Me.tbxPinForConnect.Location = New System.Drawing.Point(107, 112)
         Me.tbxPinForConnect.MaxLength = 8
         Me.tbxPinForConnect.Name = "tbxPinForConnect"
         Me.tbxPinForConnect.PasswordChar = Global.Microsoft.VisualBasic.ChrW(8226)
@@ -374,7 +374,7 @@ Partial Class frmMain
         Me.lstNodeAccounts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.lstNodeAccounts.Font = New System.Drawing.Font("Consolas", 12.0!)
         Me.lstNodeAccounts.FormattingEnabled = True
-        Me.lstNodeAccounts.Location = New System.Drawing.Point(14, 193)
+        Me.lstNodeAccounts.Location = New System.Drawing.Point(14, 61)
         Me.lstNodeAccounts.Name = "lstNodeAccounts"
         Me.lstNodeAccounts.Size = New System.Drawing.Size(321, 27)
         Me.lstNodeAccounts.TabIndex = 3
@@ -386,12 +386,13 @@ Partial Class frmMain
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(11, 42)
+        Me.Label5.Location = New System.Drawing.Point(158, 143)
         Me.Label5.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(283, 18)
+        Me.Label5.Size = New System.Drawing.Size(32, 18)
         Me.Label5.TabIndex = 3
-        Me.Label5.Text = "Укажите учётные данные удалённого узла"
+        Me.Label5.Text = "или"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label6
         '
@@ -400,7 +401,7 @@ Partial Class frmMain
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(11, 222)
+        Me.Label6.Location = New System.Drawing.Point(12, 91)
         Me.Label6.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(251, 18)
@@ -414,12 +415,12 @@ Partial Class frmMain
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(11, 169)
+        Me.Label4.Location = New System.Drawing.Point(11, 40)
         Me.Label4.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(278, 18)
+        Me.Label4.Size = New System.Drawing.Size(252, 18)
         Me.Label4.TabIndex = 3
-        Me.Label4.Text = "или выберите учетную запись из списка ..."
+        Me.Label4.Text = "Выберите учетную запись из списка ..."
         '
         'Label3
         '
@@ -428,7 +429,7 @@ Partial Class frmMain
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label3.Location = New System.Drawing.Point(11, 115)
+        Me.Label3.Location = New System.Drawing.Point(13, 201)
         Me.Label3.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(59, 18)
@@ -442,7 +443,7 @@ Partial Class frmMain
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(11, 68)
+        Me.Label2.Location = New System.Drawing.Point(12, 155)
         Me.Label2.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(131, 18)
@@ -455,10 +456,10 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbxPasswordForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbxPasswordForConnect.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.tbxPasswordForConnect.Location = New System.Drawing.Point(14, 137)
+        Me.tbxPasswordForConnect.Location = New System.Drawing.Point(15, 222)
         Me.tbxPasswordForConnect.MaxLength = 0
         Me.tbxPasswordForConnect.Name = "tbxPasswordForConnect"
-        Me.tbxPasswordForConnect.Size = New System.Drawing.Size(321, 19)
+        Me.tbxPasswordForConnect.Size = New System.Drawing.Size(320, 19)
         Me.tbxPasswordForConnect.TabIndex = 2
         Me.tbxPasswordForConnect.Text = "123456"
         Me.tbxPasswordForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -470,7 +471,7 @@ Partial Class frmMain
         Me.btnPamConnect.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.btnPamConnect.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnPamConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnPamConnect.Location = New System.Drawing.Point(78, 287)
+        Me.btnPamConnect.Location = New System.Drawing.Point(83, 255)
         Me.btnPamConnect.Name = "btnPamConnect"
         Me.btnPamConnect.Size = New System.Drawing.Size(88, 28)
         Me.btnPamConnect.TabIndex = 5
@@ -482,7 +483,7 @@ Partial Class frmMain
         Me.btnHideUserForConnect.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.btnHideUserForConnect.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnHideUserForConnect.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnHideUserForConnect.Location = New System.Drawing.Point(172, 287)
+        Me.btnHideUserForConnect.Location = New System.Drawing.Point(177, 255)
         Me.btnHideUserForConnect.Name = "btnHideUserForConnect"
         Me.btnHideUserForConnect.Size = New System.Drawing.Size(88, 28)
         Me.btnHideUserForConnect.TabIndex = 6
@@ -495,10 +496,10 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbxUserForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbxUserForConnect.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.tbxUserForConnect.Location = New System.Drawing.Point(14, 90)
+        Me.tbxUserForConnect.Location = New System.Drawing.Point(15, 176)
         Me.tbxUserForConnect.MaxLength = 0
         Me.tbxUserForConnect.Name = "tbxUserForConnect"
-        Me.tbxUserForConnect.Size = New System.Drawing.Size(321, 19)
+        Me.tbxUserForConnect.Size = New System.Drawing.Size(320, 19)
         Me.tbxUserForConnect.TabIndex = 1
         Me.tbxUserForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxUserForConnect.WordWrap = False
@@ -514,7 +515,7 @@ Partial Class frmMain
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(344, 27)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Ввод учётных данных"
+        Me.Label1.Text = "Учётные данные для подключения"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlFindResult

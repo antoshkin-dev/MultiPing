@@ -4,6 +4,8 @@ Imports System.Threading
 Imports System.Web.Script.Serialization
 'Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices
+
 'Imports System.Xml.Serialization
 Imports MultiPing.MyClasses
 
@@ -21,19 +23,19 @@ Public Class frmLogin
     Private Delegate Sub CloseFormD()
     Private Delegate Sub SetPasswordFocusD()
     Private Sub HideLoading()
-        If pnlConnect.InvokeRequired = True Then
-            pnlConnect.Invoke(New HideLoadingD(AddressOf HideLoading))
+        If picLoading.InvokeRequired = True Then
+            picLoading.Invoke(New HideLoadingD(AddressOf HideLoading))
         Else
-            pnlConnect.Visible = False
+            picLoading.Visible = False
         End If
         'Включаем кнопку логина
         EnableLoginButton()
     End Sub
     Private Sub ShowLoading()
-        If pnlConnect.InvokeRequired = True Then
-            pnlConnect.Invoke(New ShowLoadingD(AddressOf ShowLoading))
+        If picLoading.InvokeRequired = True Then
+            picLoading.Invoke(New ShowLoadingD(AddressOf ShowLoading))
         Else
-            pnlConnect.Visible = True
+            picLoading.Visible = True
         End If
     End Sub
     Private Sub EnableLoginButton()
@@ -109,7 +111,13 @@ Public Class frmLogin
     Private Sub LoadLogins(XMLText As String)
         Dim XReader As New XmlDocument()
         Dim XMLNodes As XmlNodeList
-        XReader.LoadXml(XMLText)
+        Try
+            XReader.LoadXml(XMLText)
+        Catch ex As Exception
+            MsgBox("Ошибка обработки данных от сервера. " & ex.Message & vbNewLine & "Полученные данные: " & XMLText, MsgBoxStyle.Critical, "Ошибка")
+            End
+        End Try
+
         REM 1. Формируем список компаний
         XMLNodes = XReader.GetElementsByTagName("companies")
         For Each CompaniesNode As XmlNode In XMLNodes
@@ -122,7 +130,13 @@ Public Class frmLogin
         XMLNodes = XReader.GetElementsByTagName("users")
         For Each UsersNode As XmlNode In XMLNodes
             For Each User As XmlNode In UsersNode
-                Users.Add(New UserCompany(User("name").InnerText, CInt(User("uid").InnerText), CInt(User("cid").InnerText)))
+                Dim NewUser As New UserCompany()
+                NewUser.UserName = User("name").InnerText
+                NewUser.UID = CInt(User("uid").InnerText)
+                NewUser.CID = CInt(User("cid").InnerText)
+                NewUser.HaveAD = IIf(CInt(User("havead").InnerText) = 1, True, False)
+                NewUser.HaveOTP = IIf(CInt(User("haveotp").InnerText) = 1, True, False)
+                Users.Add(NewUser)
             Next
         Next
 
@@ -169,6 +183,7 @@ Public Class frmLogin
                 cbxUser.Items.Add(New ListItem(User.UserName, CStr(User.UID)))
             End If
         Next
+        lblLoading.Text = "Выберите пользователя"
     End Sub
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         If cbxUser.SelectedItem Is Nothing Or tbxPassword.Text = "" Then
@@ -180,8 +195,6 @@ Public Class frmLogin
             tbxSessionPin.Focus()
             tbxSessionPin.SelectAll()
             Exit Sub
-            '        Else
-            '           PublicData.SessionPinCode = New PinCode(tbxSessionPin.Text)
         End If
 
         btnLogin.Enabled = False
@@ -193,7 +206,7 @@ Public Class frmLogin
         My.Settings.Save()
 
         'Отправляем запрос на авторизацию
-        ProcessLogin(CStr(SelItem.Value), tbxPassword.Text)
+        ProcessLogin(CInt(SelItem.Value), tbxPassword.Text)
     End Sub
 
     Private Function ProcessLogin(UID As Integer, Password As String) As Boolean
@@ -226,56 +239,72 @@ Public Class frmLogin
         End If
         Dim JSONUserSession As New MyClasses.JsonDecoderUserSession
         JSONUserSession = JsonResult.data 'JsonParser.Deserialize(Of DecoderUserSession)(JsonResult.data)
-
-        REM продолжаем авторизацию
-        SetMessage("Авторизация...")
-
-        REM Готовим UserKeyHash
-        Dim WhitePaper As String = "<tkfz<evfufLkzGfhjkz"
-        Dim UserKeyHash As String = getSHAHash(WhitePaper & Password & UID)
-
-        REM Готовим CryptAuth
-        Dim DateFormated As String
-        Dim DF As String = "yyyyMMdd"
-        DateFormated = DateAndTime.Now.ToString(DF)
-        Dim Cryptor As New MyCryptor
-        Dim AuthHash As String = getSHAHash(UserKeyHash & DateFormated)
-        Debug.Print("Auth Hash: " & AuthHash)
-
         Dim CryptKey As String = Strings.Left(getSHAHash(JSONUserSession.sessionkey), 32)
         Debug.Print("Crypt key string: " & CryptKey)
 
-        Dim CryptAuth As String = Cryptor.Crypt(AuthHash, CryptKey)
-        Debug.Print("crypt auth: " & CryptAuth)
+        REM продолжаем авторизацию
+        SetMessage("Авторизация...")
+        'Готовим запрос на авторизацию
 
-
-        REM Отправляем CryptHash на проверку авторизации
-        HP.AddSendVar("action", "secureauth")
         HP.AddSendVar("userid", UID)
-        HP.AddSendVar("sessid", JSONUserSession.sessionid)
-        HP.AddSendVar("cryptauth", CryptAuth)
+        ' Находим объект пользователя, с которым будем работать
+        Dim User As UserCompany = FindUserByUID(UID)
+
+        'Если требуется авторизация OTP, прикладываем проверочное значение в запрос
+        If User.HaveOTP Then
+            If tbxOTP.TextLength <> 6 Then
+                SetMessage("Требуется ввести одноразовый код из приложения-генератора OTP")
+                SleepAndHide(3000)
+                Return False
+            End If
+            HP.AddSendVar("otp", tbxOTP.Text)
+        End If
+
+        If User.HaveAD Then 'Доменная авторизация
+            HP.AddSendVar("rawPassword", tbxPassword.Text)
+            HP.AddSendVar("action", "adauth")
+        Else 'внутренняя авторизация WebApps
+            REM Готовим UserKeyHash
+            Dim WhitePaper As String = "<tkfz<evfufLkzGfhjkz"
+            Dim UserKeyHash As String = getSHAHash(WhitePaper & Password & UID)
+
+            REM Готовим CryptAuth
+            Dim DateFormated As String
+            Dim DF As String = "yyyyMMdd"
+            DateFormated = DateAndTime.Now.ToString(DF)
+            Dim Cryptor As New MyCryptor
+            Dim AuthHash As String = getSHAHash(UserKeyHash & DateFormated)
+            Debug.Print("Auth Hash: " & AuthHash)
+
+            Dim CryptAuth As String = Cryptor.Crypt(AuthHash, CryptKey)
+            Debug.Print("crypt auth: " & CryptAuth)
+            REM Отправляем CryptHash на проверку авторизации
+            HP.AddSendVar("action", "secureauth")
+            HP.AddSendVar("sessid", JSONUserSession.sessionid)
+            HP.AddSendVar("cryptauth", CryptAuth)
+        End If
+
+        'Отправляем запрос на сервер авторизации
         Debug.Print(HP.GetRequestText)
         Dim Result As String = HP.SendHTTPRequest(PublicData.MPURL, "POST", True)
-        'Debug.Print(Result)
         If (Mid(Result, 1, 1) = "!") Then
             If Result = "!auth error" Then
                 SetMessage("Неверный пароль, попробуйте повторить ввод")
                 SleepAndHide(3000)
-                Return False
             Else
                 SetMessage("Возникла ошибка авторизации: " & vbNewLine & Result)
                 SleepAndHide(10000)
-                Return False
             End If
-        Else
-            REM Авторизация прошла успешно. Запоминаем сессию декодера и закрываем ключ декодера пин-кодом авторизации
-            PublicData.DecoderSession.SessionId = JSONUserSession.sessionid
-            Dim PinCryptor As New MyClasses.MyCryptor
-            PublicData.DecoderSession.SessionKeyClosedByPin = PinCryptor.Crypt(CryptKey, Strings.Left(getSHAHash(tbxSessionPin.Text), 32))
-            REM Загружаем список конфигураций, полученный от сервера Multiping
-            LoadConfigs(Result)
-            Return True
+            Return False
         End If
+
+        REM Авторизация прошла успешно. Запоминаем сессию декодера и закрываем ключ декодера пин-кодом авторизации
+        PublicData.DecoderSession.SessionId = JSONUserSession.sessionid
+        Dim PinCryptor As New MyClasses.MyCryptor
+        PublicData.DecoderSession.SessionKeyClosedByPin = PinCryptor.Crypt(CryptKey, Strings.Left(getSHAHash(tbxSessionPin.Text), 32))
+        REM Загружаем список конфигураций, полученный от сервера Multiping
+        LoadConfigs(Result)
+        Return True
     End Function
     Private Sub LoadConfigs(XMLText As String)
         Dim XReader As New XmlDocument()
@@ -330,12 +359,49 @@ Public Class frmLogin
         HideLoading()
     End Sub
 
-    Private Sub tbxSessionPin_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxSessionPin.KeyDown
+    Private Sub tbxSessionPin_KeyDown(sender As Object, e As KeyEventArgs) Handles tbxSessionPin.KeyDown, tbxOTP.KeyDown
         'If e.KeyCode = Keys.N Then
         Debug.Print(e.KeyValue)
         If (e.KeyValue <> 8 And e.KeyValue <> 37 And e.KeyValue <> 39) And (e.KeyValue < 48 Or e.KeyValue > 57) And (e.KeyValue < 96 Or e.KeyValue > 105) Then
             e.SuppressKeyPress = True
         End If
     End Sub
+
+    Private Sub cbxUser_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxUser.SelectedIndexChanged
+        Dim SelItem As ListItem = CType(cbxUser.SelectedItem, ListItem)
+        Dim UserID As Integer = CInt(SelItem.Value)
+        Dim User As UserCompany = FindUserByUID(UserID)
+        If User.HaveAD Then
+            lblLoading.Text = "Введите пароль от доменной учетной записи"
+        Else
+            lblLoading.Text = "Введите ваш пароль"
+        End If
+
+        If IsNothing(User) = False And User.HaveOTP = True Then
+            lblOTP.Visible = True
+            tbxOTP.Visible = True
+            Exit Sub
+        End If
+        lblOTP.Visible = False
+        tbxOTP.Visible = False
+    End Sub
+    Private Function FindUserByUID(UID As Integer) As UserCompany
+        For Each User As UserCompany In Users
+            If User.UID = UID Then
+                Return User
+            End If
+        Next
+        Return Nothing
+    End Function
+    Private Sub tbxPassword_KeyUp(sender As Object, e As KeyEventArgs) Handles tbxPassword.KeyUp
+        lblLoading.Text = "Укажите разовый PIN-код сессии" & vbCrLf & "от 4 до 8 цифр"
+    End Sub
+
+    Private Sub tbxSessionPin_KeyUp(sender As Object, e As KeyEventArgs) Handles tbxSessionPin.KeyUp
+        If tbxOTP.Visible = True Then
+            lblLoading.Text = "Введите одноразовый код из приложения-генератора OTP"
+        End If
+    End Sub
+
 End Class
 

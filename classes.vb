@@ -37,6 +37,10 @@ Public Class MyClasses
         Private _UserName As String
         Private _UID As Integer
         Private _CID As Integer
+
+        Public Property HaveOTP As Boolean = False
+        Public Property HaveAD As Boolean = False
+
         Public Property UserName As String
             Get
                 Return _UserName
@@ -73,11 +77,6 @@ Public Class MyClasses
         End Function
         Public Sub New()
 
-        End Sub
-        Public Sub New(ByVal UserName As String, UID As Integer, CID As Integer)
-            _UserName = UserName
-            _UID = UID
-            _CID = CID
         End Sub
     End Class
     Public Class MPConfig

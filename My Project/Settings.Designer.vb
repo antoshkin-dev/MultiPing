@@ -161,7 +161,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://webapp.mega.kz")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://webappdev.mega.kz")>  _
         Public ReadOnly Property ServerURL() As String
             Get
                 Return CType(Me("ServerURL"),String)

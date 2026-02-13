@@ -159,7 +159,13 @@ Public Class frmMain
         EndPointsList.Clear()
         Dim XReader As New XmlDocument()
         Dim XMLNodes As XmlNodeList
-        XReader.LoadXml(XMLText)
+        Try
+            XReader.LoadXml(XMLText)
+        Catch ex As Exception
+            MsgBox("Ошибка при загрузки конфигурации: " & ex.Message)
+            Exit Sub
+        End Try
+
         REM 1. Получаем информацию о видах действий в текущей конфигурации
         XMLNodes = XReader.GetElementsByTagName("actions")
         Dim ActionsNode As XmlNode = XMLNodes(0)
