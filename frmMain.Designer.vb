@@ -86,7 +86,7 @@ Partial Class frmMain
         Me.pnlTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlTree.Location = New System.Drawing.Point(4, 23)
         Me.pnlTree.Name = "pnlTree"
-        Me.pnlTree.Size = New System.Drawing.Size(389, 486)
+        Me.pnlTree.Size = New System.Drawing.Size(388, 486)
         Me.pnlTree.TabIndex = 0
         '
         'ToolStrip1
@@ -95,7 +95,7 @@ Partial Class frmMain
         Me.ToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(399, 23)
+        Me.ToolStrip1.Size = New System.Drawing.Size(398, 23)
         Me.ToolStrip1.TabIndex = 6
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -223,7 +223,7 @@ Partial Class frmMain
         Me.StatusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 511)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(399, 50)
+        Me.StatusStrip1.Size = New System.Drawing.Size(398, 50)
         Me.StatusStrip1.TabIndex = 7
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -284,7 +284,7 @@ Partial Class frmMain
         Me.pnlPIN.Controls.Add(Me.lblEnterPin)
         Me.pnlPIN.Location = New System.Drawing.Point(31, 211)
         Me.pnlPIN.Name = "pnlPIN"
-        Me.pnlPIN.Size = New System.Drawing.Size(345, 131)
+        Me.pnlPIN.Size = New System.Drawing.Size(344, 131)
         Me.pnlPIN.TabIndex = 14
         Me.pnlPIN.Visible = False
         '
@@ -309,7 +309,7 @@ Partial Class frmMain
         Me.tbxPinCode.MaxLength = 8
         Me.tbxPinCode.Name = "tbxPinCode"
         Me.tbxPinCode.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.tbxPinCode.Size = New System.Drawing.Size(300, 39)
+        Me.tbxPinCode.Size = New System.Drawing.Size(299, 39)
         Me.tbxPinCode.TabIndex = 1
         Me.tbxPinCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxPinCode.UseSystemPasswordChar = True
@@ -346,7 +346,7 @@ Partial Class frmMain
         Me.pnlUserForConnect.Controls.Add(Me.Label1)
         Me.pnlUserForConnect.Location = New System.Drawing.Point(31, 100)
         Me.pnlUserForConnect.Name = "pnlUserForConnect"
-        Me.pnlUserForConnect.Size = New System.Drawing.Size(345, 290)
+        Me.pnlUserForConnect.Size = New System.Drawing.Size(344, 290)
         Me.pnlUserForConnect.TabIndex = 16
         Me.pnlUserForConnect.Visible = False
         '
@@ -356,11 +356,11 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbxPinForConnect.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbxPinForConnect.Font = New System.Drawing.Font("Tahoma", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.tbxPinForConnect.Location = New System.Drawing.Point(107, 112)
+        Me.tbxPinForConnect.Location = New System.Drawing.Point(96, 111)
         Me.tbxPinForConnect.MaxLength = 8
         Me.tbxPinForConnect.Name = "tbxPinForConnect"
         Me.tbxPinForConnect.PasswordChar = Global.Microsoft.VisualBasic.ChrW(8226)
-        Me.tbxPinForConnect.Size = New System.Drawing.Size(149, 25)
+        Me.tbxPinForConnect.Size = New System.Drawing.Size(148, 25)
         Me.tbxPinForConnect.TabIndex = 4
         Me.tbxPinForConnect.Text = "12345678"
         Me.tbxPinForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -376,20 +376,19 @@ Partial Class frmMain
         Me.lstNodeAccounts.FormattingEnabled = True
         Me.lstNodeAccounts.Location = New System.Drawing.Point(14, 61)
         Me.lstNodeAccounts.Name = "lstNodeAccounts"
-        Me.lstNodeAccounts.Size = New System.Drawing.Size(321, 27)
+        Me.lstNodeAccounts.Size = New System.Drawing.Size(320, 27)
         Me.lstNodeAccounts.TabIndex = 3
         '
         'Label5
         '
         Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(158, 143)
+        Me.Label5.Location = New System.Drawing.Point(14, 143)
         Me.Label5.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(32, 18)
+        Me.Label5.Size = New System.Drawing.Size(320, 18)
         Me.Label5.TabIndex = 3
         Me.Label5.Text = "или"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -404,9 +403,9 @@ Partial Class frmMain
         Me.Label6.Location = New System.Drawing.Point(12, 91)
         Me.Label6.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(251, 18)
+        Me.Label6.Size = New System.Drawing.Size(211, 18)
         Me.Label6.TabIndex = 3
-        Me.Label6.Text = "... и введите пин-код текущей сессии:"
+        Me.Label6.Text = "... и введите пин-код MultiPing:"
         '
         'Label4
         '
@@ -418,9 +417,9 @@ Partial Class frmMain
         Me.Label4.Location = New System.Drawing.Point(11, 40)
         Me.Label4.Margin = New System.Windows.Forms.Padding(3, 3, 3, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(252, 18)
+        Me.Label4.Size = New System.Drawing.Size(241, 18)
         Me.Label4.TabIndex = 3
-        Me.Label4.Text = "Выберите учетную запись из списка ..."
+        Me.Label4.Text = "Выберите учетную запись из списка:"
         '
         'Label3
         '
@@ -459,8 +458,8 @@ Partial Class frmMain
         Me.tbxPasswordForConnect.Location = New System.Drawing.Point(15, 222)
         Me.tbxPasswordForConnect.MaxLength = 0
         Me.tbxPasswordForConnect.Name = "tbxPasswordForConnect"
-        Me.tbxPasswordForConnect.Size = New System.Drawing.Size(320, 19)
-        Me.tbxPasswordForConnect.TabIndex = 2
+        Me.tbxPasswordForConnect.Size = New System.Drawing.Size(319, 19)
+        Me.tbxPasswordForConnect.TabIndex = 6
         Me.tbxPasswordForConnect.Text = "123456"
         Me.tbxPasswordForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxPasswordForConnect.UseSystemPasswordChar = True
@@ -474,7 +473,7 @@ Partial Class frmMain
         Me.btnPamConnect.Location = New System.Drawing.Point(83, 255)
         Me.btnPamConnect.Name = "btnPamConnect"
         Me.btnPamConnect.Size = New System.Drawing.Size(88, 28)
-        Me.btnPamConnect.TabIndex = 5
+        Me.btnPamConnect.TabIndex = 7
         Me.btnPamConnect.Text = "Подключить"
         Me.btnPamConnect.UseVisualStyleBackColor = False
         '
@@ -486,7 +485,7 @@ Partial Class frmMain
         Me.btnHideUserForConnect.Location = New System.Drawing.Point(177, 255)
         Me.btnHideUserForConnect.Name = "btnHideUserForConnect"
         Me.btnHideUserForConnect.Size = New System.Drawing.Size(88, 28)
-        Me.btnHideUserForConnect.TabIndex = 6
+        Me.btnHideUserForConnect.TabIndex = 8
         Me.btnHideUserForConnect.Text = "Отмена"
         Me.btnHideUserForConnect.UseVisualStyleBackColor = False
         '
@@ -499,8 +498,8 @@ Partial Class frmMain
         Me.tbxUserForConnect.Location = New System.Drawing.Point(15, 176)
         Me.tbxUserForConnect.MaxLength = 0
         Me.tbxUserForConnect.Name = "tbxUserForConnect"
-        Me.tbxUserForConnect.Size = New System.Drawing.Size(320, 19)
-        Me.tbxUserForConnect.TabIndex = 1
+        Me.tbxUserForConnect.Size = New System.Drawing.Size(319, 19)
+        Me.tbxUserForConnect.TabIndex = 5
         Me.tbxUserForConnect.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.tbxUserForConnect.WordWrap = False
         '
@@ -513,7 +512,7 @@ Partial Class frmMain
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(0, 5)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(344, 27)
+        Me.Label1.Size = New System.Drawing.Size(343, 27)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Учётные данные для подключения"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -574,7 +573,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(399, 561)
+        Me.ClientSize = New System.Drawing.Size(398, 561)
         Me.Controls.Add(Me.pnlFindResult)
         Me.Controls.Add(Me.pnlUserForConnect)
         Me.Controls.Add(Me.pnlPIN)

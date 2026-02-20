@@ -134,8 +134,8 @@ Public Class frmLogin
                 NewUser.UserName = User("name").InnerText
                 NewUser.UID = CInt(User("uid").InnerText)
                 NewUser.CID = CInt(User("cid").InnerText)
-                NewUser.HaveAD = IIf(CInt(User("havead").InnerText) = 1, True, False)
-                NewUser.HaveOTP = IIf(CInt(User("haveotp").InnerText) = 1, True, False)
+                If IsNothing(User("havead")) = False Then NewUser.HaveAD = IIf(CInt(User("havead").InnerText) = 1, True, False)
+                If IsNothing(User("haveotp")) = False Then NewUser.HaveOTP = IIf(CInt(User("haveotp").InnerText) = 1, True, False)
                 Users.Add(NewUser)
             Next
         Next
