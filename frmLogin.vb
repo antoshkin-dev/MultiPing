@@ -309,7 +309,13 @@ Public Class frmLogin
     Private Sub LoadConfigs(XMLText As String)
         Dim XReader As New XmlDocument()
         Dim XMLNodes As XmlNodeList
-        XReader.LoadXml(XMLText)
+        Try
+            XReader.LoadXml(XMLText)
+        Catch ex As Exception
+            MsgBox("Ошибка обработки конфигурации." & vbNewLine & ex.Message & vbNewLine & XMLText, MsgBoxStyle.Critical)
+            Exit Sub
+        End Try
+
         REM 1. Получаем код сессии
         XMLNodes = XReader.GetElementsByTagName("sessionid")
         PublicData.SessionID = (XMLNodes(0).InnerText)

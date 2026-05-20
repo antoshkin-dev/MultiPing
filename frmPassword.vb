@@ -32,7 +32,9 @@ Public Class frmPassword
     End Sub
     Private Sub CopyPassword()
         BeginTimer("Пароль скопирован. Буфер обмена будет очищен через {0}с.")
-        Clipboard.SetText(tbxPassword.Text)
+        'Clipboard.SetText(tbxPassword.Text)
+        Clipboard.SetDataObject(tbxPassword.Text, False, 10, 100)
+
     End Sub
     Private Sub btnCopyPassword_Click(sender As Object, e As EventArgs) Handles btnCopyPassword.Click
         If PasswordIsCrypted = True Then

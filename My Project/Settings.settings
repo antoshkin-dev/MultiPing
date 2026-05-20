@@ -30,7 +30,7 @@
       <Value Profile="(Default)">10000</Value>
     </Setting>
     <Setting Name="ServerURL" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://webappdev.mega.kz</Value>
+      <Value Profile="(Default)">https://webapp.qwer.kz</Value>
     </Setting>
     <Setting Name="OpenedNods" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -42,7 +42,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DecoderURL" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://decoder.mega.kz</Value>
+      <Value Profile="(Default)">https://decoder.qwer.kz:8443</Value>
     </Setting>
     <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">415</Value>

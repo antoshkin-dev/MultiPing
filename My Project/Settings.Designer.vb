@@ -161,7 +161,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://webappdev.mega.kz")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://webapp.qwer.kz")>  _
         Public ReadOnly Property ServerURL() As String
             Get
                 Return CType(Me("ServerURL"),String)
@@ -196,7 +196,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("https://decoder.mega.kz")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("https://decoder.qwer.kz:8443")>  _
         Public Property DecoderURL() As String
             Get
                 Return CType(Me("DecoderURL"),String)

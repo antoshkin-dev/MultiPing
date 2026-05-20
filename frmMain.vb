@@ -35,6 +35,7 @@ Public Class frmMain
     ''' </summary>
     Private FoundIndex As Integer
     Private Sub UpdateFormElement(ByRef FormElement As Object, ByRef RunningSub As Func(Of Object, Object), RunningSubArgs As Object)
+
         If FormElement.InvokeRequired = True Then
             Dim args(2) As Object
             args(0) = FormElement
@@ -1114,9 +1115,10 @@ Public Class frmMain
         Next
         If TotalPasswords = 0 Then Exit Sub
 
-        If prgBar.GetCurrentParent.InvokeRequired = True Then
-            prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Maximum = TotalPasswords))
-        End If
+        'If prgBar.GetCurrentParent.InvokeRequired = True Then
+        'prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Maximum = TotalPasswords))
+        'End If
+        prgBar.Maximum = TotalPasswords
         If lblStatus.GetCurrentParent.InvokeRequired = True Then
             lblStatus.GetCurrentParent.Invoke(New MethodInvoker(Sub() lblInfo.Text = "Выгрузка " & TotalPasswords & " учётных записей"))
         End If
@@ -1146,9 +1148,10 @@ Public Class frmMain
                     Else
                         TableRow = String.Format(TableRowTemplate, Password.Name, Password.UserName, PasswordHTML, CurrentPassword)
                     End If
-                    If prgBar.GetCurrentParent.InvokeRequired = True Then
-                        prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Value = CurrentPassword))
-                    End If
+                    'If prgBar.GetCurrentParent.InvokeRequired = True Then
+                    '    prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Value = CurrentPassword))
+                    'End If
+                    prgBar.Value = CurrentPassword
                     CurrentPassword += 1
                     HtmlResult &= TableRow
                 Next
@@ -1156,10 +1159,10 @@ Public Class frmMain
         Next
         HtmlResult &= HtmlFooter
 
-        If prgBar.GetCurrentParent.InvokeRequired = True Then
-            prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Value = 0))
-        End If
-
+        'If prgBar.GetCurrentParent.InvokeRequired = True Then
+        '    prgBar.GetCurrentParent.Invoke(New MethodInvoker(Sub() prgBar.Value = 0))
+        'End If
+        prgBar.Value = 0
 
         REM Устанавливаем значения полей показанной формы
         PasswordInventWin.Invoke(New MethodInvoker(Sub()

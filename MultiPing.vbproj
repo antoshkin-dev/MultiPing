@@ -236,6 +236,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ConfigCache\.gitkeep">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="MultiPing_TemporaryKey.pfx" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
@@ -251,20 +254,51 @@
     <None Include="loading.gif" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AutoPing\ExtendedTree\Extended Tree\Extended Tree.vbproj">
-      <Project>{5c718d2c-2459-4672-8773-38fedf90137b}</Project>
-      <Name>Extended Tree</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\HTTPProcessor\HTTPProcessor.vbproj">
-      <Project>{ed0d4db2-ad59-4b9f-9a8a-08119a4d458e}</Project>
-      <Name>HTTPProcessor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PAMConnector\PAMConnector.vbproj">
-      <Project>{80424b80-1355-4936-8a92-5fad19285d9d}</Project>
-      <Name>PAMConnector</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Images\cam2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\city.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\cloudserver.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\countmax.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\folder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\hardware.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\market.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\none.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\pc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\printer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\router.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\server.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\vesy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\vr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\wifi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="multiping.ico" />
     <None Include="Resources\eye.png" />
     <None Include="Resources\page_copy.png" />
@@ -281,6 +315,21 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extended-Tree\Extended Tree.vbproj">
+      <Project>{5c718d2c-2459-4672-8773-38fedf90137b}</Project>
+      <Name>Extended Tree</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HTTPProcessor\HTTPProcessor.vbproj">
+      <Project>{ed0d4db2-ad59-4b9f-9a8a-08119a4d458e}</Project>
+      <Name>HTTPProcessor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PAMConnector\PAMConnector.vbproj">
+      <Project>{80424b80-1355-4936-8a92-5fad19285d9d}</Project>
+      <Name>PAMConnector</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
