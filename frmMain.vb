@@ -920,9 +920,16 @@ Public Class frmMain
         TMass = Nothing
         'Всё ок, кидаем пинг
         If PingPacked.ContainsKey(Host) = False Then
-            PingPacked.Add(Host, PingSender)
-            AddHandler PingSender.PingCompleted, AddressOf eh_pingMonitorComplete
-            PingSender.SendAsync(Host, 3000, Host)
+            Try
+                PingPacked.Add(Host, PingSender)
+                AddHandler PingSender.PingCompleted, AddressOf eh_pingMonitorComplete
+                PingSender.SendAsync(Host, 3000, Host)
+            Catch ex As Exception
+                Debug.WriteLine(ex)
+                If PingPacked.ContainsKey(Host) Then
+                    PingPacked.Remove(Host)
+                End If
+            End Try
         End If
     End Sub
     Private Sub eh_pingMonitorComplete(ByVal sender As Object, ByVal e As Net.NetworkInformation.PingCompletedEventArgs)
